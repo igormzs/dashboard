@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../lib/supabaseClient';
 
 export function ProfilePage() {
   const { user, updateProfile, logout } = useAuth();
   const navigate = useNavigate();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -17,7 +19,8 @@ export function ProfilePage() {
   });
 
   const [saving, setSaving] = useState(false);
-  const [status, setStatus] = useState<{ msg: string; type: 'success' | 'error' } | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [status, setStatus] = useState<{ msg: string; type: 'success' | 'error' | 'info' } | null>(null);
 
   useEffect(() => {
     if (user?.user_metadata) {
@@ -31,6 +34,52 @@ export function ProfilePage() {
       }
     }
   }, [user]);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate type and size (2MB)
+    if (!file.type.startsWith('image/')) {
+      setStatus({ msg: 'Por favor, selecione uma imagem válida.', type: 'error' });
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      setStatus({ msg: 'A imagem deve ter menos de 2MB.', type: 'error' });
+      return;
+    }
+
+    setUploading(true);
+    setStatus({ msg: 'A carregar imagem...', type: 'info' });
+
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user?.id}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+
+      setAvatarUrl(publicUrl);
+      setStatus({ msg: 'Imagem carregada com sucesso!', type: 'success' });
+    } catch (err: any) {
+      console.error('Upload error:', err);
+      setStatus({ 
+        msg: 'Erro no upload: Certifica-te que o bucket "avatars" existe e é público.', 
+        type: 'error' 
+      });
+    } finally {
+      setUploading(false);
+      setTimeout(() => setStatus(null), 3000);
+    }
+  };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,9 +112,20 @@ export function ProfilePage() {
   return (
     <div className="flex flex-col min-h-full max-w-4xl mx-auto p-6 md:p-10 animate-fade-in">
       <div className="flex items-center justify-between mb-10">
-        <div>
-          <h1 className="text-3xl font-extrabold text-gray-800 tracking-tight">O meu Perfil</h1>
-          <p className="text-gray-500 mt-1">Gira as tuas informações e preferências do dashboard.</p>
+        <div className="flex items-center gap-5">
+          <button 
+            onClick={() => navigate('/')}
+            className="w-11 h-11 flex items-center justify-center bg-white border border-gray-100 text-gray-500 rounded-full hover:bg-gray-50 hover:text-brand-blue transition-all shadow-sm shrink-0"
+            title="Voltar ao Dashboard"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </button>
+          <div>
+            <h1 className="text-3xl font-extrabold text-gray-800 tracking-tight">O meu Perfil</h1>
+            <p className="text-gray-500 mt-1">Gira as tuas informações e preferências do dashboard.</p>
+          </div>
         </div>
         <button 
           onClick={handleLogout}
@@ -74,28 +134,50 @@ export function ProfilePage() {
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           </svg>
-          Terminar Sessão
+          Sair
         </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Sidebar - Avatar and quick info */}
         <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-card flex flex-col items-center h-fit">
-          <div className="relative group mb-6">
-            <img 
-              src={displayedAvatar} 
-              alt="Profile" 
-              className="w-32 h-32 rounded-full object-cover border-4 border-gray-50 shadow-md transition-transform group-hover:scale-105"
-            />
-            <div className="absolute inset-0 rounded-full bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity pointer-events-none">
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div 
+            className="relative group mb-6 cursor-pointer"
+            onClick={() => !uploading && fileInputRef.current?.click()}
+          >
+            <div className={`w-32 h-32 rounded-full overflow-hidden border-4 border-gray-50 shadow-md transition-all ${uploading ? 'opacity-50' : 'group-hover:scale-105 group-hover:border-brand-blue/30'}`}>
+              <img 
+                src={displayedAvatar} 
+                alt="Profile" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            <div className="absolute inset-0 rounded-full bg-black/40 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-opacity text-white">
+              <svg className="w-8 h-8 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
+              <span className="text-[10px] font-bold uppercase tracking-widest">Alterar</span>
             </div>
+
+            {uploading && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-10 h-10 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
+              </div>
+            )}
+            
+            <input 
+              type="file" 
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              accept="image/*"
+              className="hidden"
+            />
           </div>
-          <h3 className="text-xl font-bold text-gray-800 text-center">{firstName} {lastName}</h3>
-          <p className="text-sm text-gray-500 mb-6 italic">@{username || 'utilizador'}</p>
+          
+          <h3 className="text-xl font-bold text-gray-800 text-center">{firstName || 'Utilizador'} {lastName}</h3>
+          <p className="text-sm text-gray-500 mb-6 italic">@{username || 'antigravity_user'}</p>
           
           <div className="w-full pt-6 border-t border-gray-50">
             <div className="space-y-4">
@@ -104,8 +186,8 @@ export function ProfilePage() {
                 <span className="text-gray-700 font-medium truncate max-w-[120px]">{user?.email}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-400">Membro desde</span>
-                <span className="text-gray-700 font-medium">Abril 2024</span>
+                <span className="text-gray-400">Conta</span>
+                <span className="text-brand-blue font-bold px-2 py-0.5 bg-brand-blue/5 rounded-md text-[10px] uppercase">Pro Partner</span>
               </div>
             </div>
           </div>
@@ -115,7 +197,12 @@ export function ProfilePage() {
         <div className="md:col-span-2 space-y-8">
           <form onSubmit={handleSave} className="bg-white rounded-3xl border border-gray-100 shadow-card overflow-hidden">
             <div className="p-8 border-b border-gray-50">
-              <h2 className="text-lg font-bold text-gray-800 mb-6">Informações Pessoais</h2>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-bold text-gray-800">Informações Pessoais</h2>
+                {status && status.type === 'info' && (
+                   <span className="text-xs font-bold text-brand-blue animate-pulse">{status.msg}</span>
+                )}
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-gray-500 ml-1 uppercase tracking-wider">Primeiro Nome</label>
@@ -144,16 +231,6 @@ export function ProfilePage() {
                     value={username} 
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="joaosilva" 
-                    className="w-full glass-input px-4 py-3 rounded-xl text-sm"
-                  />
-                </div>
-                <div className="space-y-1.5 sm:col-span-2">
-                  <label className="text-xs font-bold text-gray-500 ml-1 uppercase tracking-wider">URL da Fotografia</label>
-                  <input 
-                    type="url" 
-                    value={avatarUrl} 
-                    onChange={(e) => setAvatarUrl(e.target.value)}
-                    placeholder="https://exemplo.com/foto.jpg" 
                     className="w-full glass-input px-4 py-3 rounded-xl text-sm"
                   />
                 </div>
@@ -214,7 +291,7 @@ export function ProfilePage() {
 
             <div className="p-8 bg-gray-50/50 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="w-full sm:w-auto">
-                {status && (
+                {status && status.type !== 'info' && (
                   <p className={`text-sm font-bold ${status.type === 'success' ? 'text-brand-mintdark' : 'text-brand-red'}`}>
                     {status.msg}
                   </p>
@@ -224,13 +301,13 @@ export function ProfilePage() {
                 <button 
                   type="button"
                   onClick={() => navigate('/')}
-                  className="flex-1 sm:flex-none px-8 py-3 bg-white border border-gray-200 text-gray-600 rounded-xl font-bold hover:bg-gray-50 transition-all"
+                  className="flex-1 sm:flex-none px-8 py-3 bg-white border border-gray-200 text-gray-600 rounded-xl font-bold hover:bg-gray-50 transition-all border-none"
                 >
                   Cancelar
                 </button>
                 <button 
                   type="submit"
-                  disabled={saving}
+                  disabled={saving || uploading}
                   className="flex-1 sm:flex-none px-8 py-3 bg-brand-blue text-white rounded-xl font-bold shadow-lg shadow-brand-blue/20 hover:bg-brand-blue/90 transition-all disabled:opacity-50"
                 >
                   {saving ? 'A guardar...' : 'Guardar Alterações'}
@@ -246,8 +323,10 @@ export function ProfilePage() {
               </svg>
             </div>
             <div>
-              <h4 className="text-orange-800 font-bold">Segurança da Conta</h4>
-              <p className="text-orange-700/70 text-sm mt-1">Deseja alterar a sua password ou remover a sua conta? Contacte o suporte técnico Antigravity.</p>
+              <h4 className="text-orange-800 font-bold">Configuração Adicional</h4>
+              <p className="text-orange-700/70 text-sm mt-1">
+                Lembre-se de criar o bucket <code className="bg-orange-100 px-1 rounded text-orange-900">avatars</code> no painel Supabase e defini-lo como <strong>público</strong> para os uploads funcionarem.
+              </p>
             </div>
           </div>
         </div>
