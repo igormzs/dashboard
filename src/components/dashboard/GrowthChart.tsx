@@ -18,11 +18,11 @@ export function GrowthChart({ labels, reachData, followData }: GrowthChartProps)
     if (!ctx) return;
 
     const gradReach = ctx.createLinearGradient(0, 0, 0, 200);
-    gradReach.addColorStop(0, 'rgba(255, 127, 80, 0.5)'); // #FF7F50 (Mild Orange)
-    gradReach.addColorStop(1, 'rgba(255, 255, 255, 0.1)'); // Fades to white
+    gradReach.addColorStop(0, 'rgba(245, 150, 82, 0.5)'); // #F59652 (Mild Orange)
+    gradReach.addColorStop(1, 'rgba(255, 255, 255, 0.1)'); 
 
     const gradFollow = ctx.createLinearGradient(0, 0, 0, 200);
-    gradFollow.addColorStop(0, 'rgba(224, 96, 49, 0.4)'); // #E06031 (Darker Orange)
+    gradFollow.addColorStop(0, 'rgba(230, 118, 38, 0.4)'); // #E67626 (Darker Orange)
     gradFollow.addColorStop(1, 'rgba(255, 255, 255, 0.1)');
 
     const config: ChartConfiguration = {
@@ -30,8 +30,8 @@ export function GrowthChart({ labels, reachData, followData }: GrowthChartProps)
       data: {
         labels: labels,
         datasets: [
-          { label: 'Account Reached', data: reachData, borderColor: '#FF7F50', backgroundColor: gradReach, fill: true, tension: 0.4, yAxisID: 'y' },
-          { label: 'Novos Seguidores', data: followData, borderColor: '#E06031', backgroundColor: gradFollow, fill: true, tension: 0.4, yAxisID: 'y1' }
+          { label: 'Account Reached', data: reachData, borderColor: '#F59652', backgroundColor: gradReach, fill: true, tension: 0.4, yAxisID: 'y' },
+          { label: 'Novos Seguidores', data: followData, borderColor: '#E67626', backgroundColor: gradFollow, fill: true, tension: 0.4, yAxisID: 'y1' }
         ]
       },
       options: {

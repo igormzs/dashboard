@@ -107,7 +107,7 @@ export function ProfilePage() {
     navigate('/login');
   };
 
-  const displayedAvatar = avatarUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(firstName || user?.email || 'User')}&background=378ADD&color=fff&size=128`;
+  const displayedAvatar = avatarUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(firstName || user?.email || 'User')}&background=F59652&color=fff&size=128`;
 
   return (
     <div className="flex flex-col min-h-full max-w-4xl mx-auto p-6 md:p-10 animate-fade-in">

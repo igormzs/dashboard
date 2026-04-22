@@ -7,9 +7,10 @@ The brand seeks to remove noise by utilizing clean geometry, unified spacing, an
 ## Core Palette
 The Stat-o theme has been simplified from a multi-color spectrum into a mono-accent orange palette, emphasizing visual calm and clarity.
 
-- **Primary Accent / Mild Orange**: `#FF7F50` (Used for active states, borders, and main graph highlights).
-- **Secondary / Dark Orange**: `#E06031` (Used for typography on light orange backgrounds and secondary chart areas).
-- **Surface / Background**: Off-white `#FDFDFD` with a diffused mesh gradient of `#FF7F50` layered on top.
+- **Primary Accent / Mild Orange**: `#F59652` (Used for active states, borders, and main graph highlights).
+- **Secondary / Dark Orange**: `#E67626` (Used for typography on light orange backgrounds and secondary chart areas).
+- **Tertiary / Light Orange**: `#FFDEBE` (Used for hover states and secondary backgrounds).
+- **Surface / Background**: Off-white `#FDFDFD` with a diffused mesh gradient of `#F59652` layered on top.
 - **Text & Core Outlines**: Deep Charcoal (`#374151`) and Dark `#1F2937` to guarantee contrast readability.
 
 ## Typography

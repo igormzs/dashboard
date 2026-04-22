@@ -13,7 +13,7 @@ export function MetricCard({ data }: { data: MetricCardData }) {
 
   const chartData = {
     labels: data.trend.map((_, i) => i.toString()),
-    datasets: [{ data: data.trend, borderColor: isDark ? '#A7F3D0' : '#378ADD', borderWidth: 2, tension: 0.4, pointRadius: 0 }],
+    datasets: [{ data: data.trend, borderColor: isDark ? '#FFDEBE' : '#F59652', borderWidth: 2, tension: 0.4, pointRadius: 0 }],
   };
 
   const chartOptions = {

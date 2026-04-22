@@ -41,11 +41,14 @@ export function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4 min-w-full" style={{ backgroundImage: 'radial-gradient(circle at top right, rgba(255, 127, 80, 0.1), transparent 40%), radial-gradient(circle at bottom left, rgba(255, 127, 80, 0.05), transparent 40%)' }}>
-      <div className="bg-white/85 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.05)] w-full max-w-md rounded-[32px] p-10 relative overflow-hidden">
+    <div className="flex items-center justify-center min-h-screen p-4 min-w-full relative overflow-hidden" style={{ backgroundImage: 'radial-gradient(circle at top right, rgba(245, 150, 82, 0.1), transparent 40%), radial-gradient(circle at bottom left, rgba(230, 118, 38, 0.05), transparent 40%)' }}>
+      {/* Mosaic Logo Pattern */}
+      <div className="logo-pattern absolute inset-0 z-0"></div>
+      
+      <div className="bg-white/85 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.05)] w-full max-w-md rounded-[32px] p-10 relative overflow-hidden z-10">
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-brand-orange rounded-full opacity-10 blur-2xl z-0 pointer-events-none"></div>
         <div className="relative z-10">
-          <div className="flex items-center justify-center gap-3 mb-8"><img src="/logo.svg" alt="Stat-o Logo" className="w-10 h-10 drop-shadow-sm" /><h1 className="text-3xl font-extrabold tracking-tight text-brand-dark">Stat-o</h1></div>
+          <div className="flex items-center justify-center gap-3 mb-8"><img src="/logo.png" alt="Stat-o Logo" className="w-10 h-10 drop-shadow-sm" /><h1 className="text-3xl font-extrabold tracking-tight text-brand-dark">Stat-o</h1></div>
           <div className="flex p-1 bg-gray-100/80 rounded-xl mb-8">
             <button onClick={() => { setMode('login'); setStatus(null); }} className={`flex-1 py-2 text-sm rounded-lg transition-all ${mode === 'login' ? 'font-bold bg-white shadow-sm text-brand-orange' : 'font-semibold text-gray-500 hover:text-gray-700'}`}>Sign In</button>
             <button onClick={() => { setMode('register'); setStatus(null); }} className={`flex-1 py-2 text-sm rounded-lg transition-all ${mode === 'register' ? 'font-bold bg-white shadow-sm text-brand-orange' : 'font-semibold text-gray-500 hover:text-gray-700'}`}>Create Account</button>

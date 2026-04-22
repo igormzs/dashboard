@@ -9,10 +9,10 @@
   --color-brand-dark: #1F2937;
   --color-brand-charcoal: #374151;
   
-  /* New Stat-o Orange Palette */
-  --color-brand-orange: #FF7F50;
-  --color-brand-orangedark: #E06031;
-  --color-brand-orangelight: #FFF0EB;
+  /* New Stat-o Orange Palette (Refined Gradient Tones) */
+  --color-brand-orange: #F59652;
+  --color-brand-orangedark: #E67626;
+  --color-brand-orangelight: #FFDEBE;
 
   --color-brand-red: #FCA5A5;
 
@@ -42,8 +42,8 @@
   body {
     background-color: #FDFDFD;
     background-image: 
-      radial-gradient(at 100% 0%, rgba(255, 127, 80, 0.08) 0px, transparent 50%),
-      radial-gradient(at 0% 100%, rgba(255, 127, 80, 0.05) 0px, transparent 50%);
+      radial-gradient(at 100% 0%, rgba(245, 150, 82, 0.08) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(230, 118, 38, 0.05) 0px, transparent 50%);
     background-attachment: fixed;
     color: var(--color-brand-dark);
     -webkit-font-smoothing: antialiased;
@@ -70,5 +70,13 @@
     background: linear-gradient(90deg, #f9fafb 25%, #f3f4f6 50%, #f9fafb 75%);
     background-size: 700px 100%;
     @apply animate-shimmer rounded-xl;
+  }
+
+  .logo-pattern {
+    background-image: url('/logo-vector.svg');
+    background-size: 60px;
+    background-repeat: repeat;
+    opacity: 0.04;
+    pointer-events: none;
   }
 }

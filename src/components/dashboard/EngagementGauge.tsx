@@ -7,7 +7,7 @@ export function EngagementGauge({ averageEngagement }: { averageEngagement: numb
   const chartData = {
     datasets: [{
       data: [averageEngagement, Math.max(0, 10 - averageEngagement)],
-      backgroundColor: ['#0F6E56', '#f3f4f6'],
+      backgroundColor: ['#F59652', '#f3f4f6'],
       borderWidth: 0, circumference: 180, rotation: -90, cutout: '80%',
       borderRadius: { outerStart: 50, outerEnd: 50, innerStart: 50, innerEnd: 50 } as any,
     }],
