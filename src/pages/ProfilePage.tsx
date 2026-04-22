@@ -115,7 +115,7 @@ export function ProfilePage() {
         <div className="flex items-center gap-5">
           <button 
             onClick={() => navigate('/')}
-            className="w-11 h-11 flex items-center justify-center bg-white border border-gray-100 text-gray-500 rounded-full hover:bg-gray-50 hover:text-brand-blue transition-all shadow-sm shrink-0"
+            className="w-11 h-11 flex items-center justify-center bg-white border border-gray-100 text-gray-500 rounded-full hover:bg-gray-50 hover:text-brand-orange transition-all shadow-sm shrink-0"
             title="Voltar ao Dashboard"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -145,7 +145,7 @@ export function ProfilePage() {
             className="relative group mb-6 cursor-pointer"
             onClick={() => !uploading && fileInputRef.current?.click()}
           >
-            <div className={`w-32 h-32 rounded-full overflow-hidden border-4 border-gray-50 shadow-md transition-all ${uploading ? 'opacity-50' : 'group-hover:scale-105 group-hover:border-brand-blue/30'}`}>
+            <div className={`w-32 h-32 rounded-full overflow-hidden border-4 border-gray-50 shadow-md transition-all ${uploading ? 'opacity-50' : 'group-hover:scale-105 group-hover:border-brand-orange/30'}`}>
               <img 
                 src={displayedAvatar} 
                 alt="Profile" 
@@ -187,7 +187,7 @@ export function ProfilePage() {
               </div>
               <div className="flex items-center justify-between text-sm">
                 <span className="text-gray-400">Conta</span>
-                <span className="text-brand-blue font-bold px-2 py-0.5 bg-brand-blue/5 rounded-md text-[10px] uppercase">Pro Partner</span>
+                <span className="text-brand-orange font-bold px-2 py-0.5 bg-brand-orange/5 rounded-md text-[10px] uppercase">Pro Partner</span>
               </div>
             </div>
           </div>
@@ -200,7 +200,7 @@ export function ProfilePage() {
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-bold text-gray-800">Informações Pessoais</h2>
                 {status && status.type === 'info' && (
-                   <span className="text-xs font-bold text-brand-blue animate-pulse">{status.msg}</span>
+                   <span className="text-xs font-bold text-brand-orange animate-pulse">{status.msg}</span>
                 )}
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -253,7 +253,7 @@ export function ProfilePage() {
                         onChange={(e) => setSettings({...settings, showDecimals: e.target.checked})}
                         className="sr-only peer" 
                       />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-blue"></div>
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-orange"></div>
                     </label>
                   </div>
                   <div className="flex items-center justify-between">
@@ -268,7 +268,7 @@ export function ProfilePage() {
                         onChange={(e) => setSettings({...settings, compactMode: e.target.checked})}
                         className="sr-only peer" 
                       />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-blue"></div>
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-orange"></div>
                     </label>
                   </div>
                 </div>
@@ -292,7 +292,7 @@ export function ProfilePage() {
             <div className="p-8 bg-gray-50/50 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="w-full sm:w-auto">
                 {status && status.type !== 'info' && (
-                  <p className={`text-sm font-bold ${status.type === 'success' ? 'text-brand-mintdark' : 'text-brand-red'}`}>
+                  <p className={`text-sm font-bold ${status.type === 'success' ? 'text-brand-orangedark' : 'text-brand-red'}`}>
                     {status.msg}
                   </p>
                 )}
@@ -308,7 +308,7 @@ export function ProfilePage() {
                 <button 
                   type="submit"
                   disabled={saving || uploading}
-                  className="flex-1 sm:flex-none px-8 py-3 bg-brand-blue text-white rounded-xl font-bold shadow-lg shadow-brand-blue/20 hover:bg-brand-blue/90 transition-all disabled:opacity-50"
+                  className="flex-1 sm:flex-none px-8 py-3 bg-brand-orange text-white rounded-xl font-bold shadow-lg shadow-brand-orange/20 hover:bg-brand-orange/90 transition-all disabled:opacity-50"
                 >
                   {saving ? 'A guardar...' : 'Guardar Alterações'}
                 </button>

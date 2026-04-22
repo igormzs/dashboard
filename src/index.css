@@ -1,24 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans: "Satoshi", "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   
-  --color-brand-bg: #F8F9FA;
-  --color-brand-dark: #1a1a1a;
-  --color-brand-charcoal: #2D3748;
-  --color-brand-mint: #A7F3D0;
-  --color-brand-mintdark: #059669;
-  --color-brand-lavender: #E0E7FF;
-  --color-brand-blue: #378ADD;
+  --color-brand-bg: #FFFFFF;
+  --color-brand-dark: #1F2937;
+  --color-brand-charcoal: #374151;
+  
+  /* New Stat-o Orange Palette */
+  --color-brand-orange: #FF7F50;
+  --color-brand-orangedark: #E06031;
+  --color-brand-orangelight: #FFF0EB;
+
   --color-brand-red: #FCA5A5;
 
-  --radius-3xl: 24px;
+  /* Stat-o Structural Values */
+  --radius-xl: 12px;
+  --radius-2xl: 12px;
+  --radius-3xl: 12px;
 
-  --shadow-card: 0 2px 15px rgba(0,0,0,0.02);
-  --shadow-card-lg: 0 4px 20px rgba(0,0,0,0.02);
-  --shadow-sidebar: 2px 0 12px rgba(0,0,0,0.03);
+  --shadow-card: 0 4px 20px rgba(0,0,0,0.03);
+  --shadow-card-lg: 0 8px 30px rgba(0,0,0,0.04);
+  --shadow-sidebar: 2px 0 12px rgba(0,0,0,0.02);
 
   --animate-shimmer: shimmer 1.5s infinite;
   --animate-fade-in: fadeIn 0.3s ease-in-out;
@@ -35,7 +40,11 @@
 
 @layer base {
   body {
-    background-color: var(--color-brand-bg);
+    background-color: #FDFDFD;
+    background-image: 
+      radial-gradient(at 100% 0%, rgba(255, 127, 80, 0.08) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(255, 127, 80, 0.05) 0px, transparent 50%);
+    background-attachment: fixed;
     color: var(--color-brand-dark);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -44,21 +53,21 @@
 
 @layer components {
   .glass-input {
-    @apply bg-white/70 border border-slate-200/80 backdrop-blur-sm transition-all duration-200;
+    @apply bg-white border border-slate-200 transition-all duration-200 rounded-xl;
   }
   .glass-input:focus {
-    @apply border-brand-blue outline-none ring-2 ring-brand-blue/20 bg-white;
+    @apply border-brand-orange outline-none ring-2 ring-brand-orange/20 bg-white;
   }
 
   .nav-item {
     @apply transition-all duration-200 cursor-pointer px-4 py-3 rounded-xl flex items-center gap-3;
   }
   .nav-item:hover, .nav-item.active {
-    @apply bg-brand-lavender text-brand-blue font-semibold;
+    @apply bg-brand-orangelight text-brand-orangedark font-semibold;
   }
 
   .skeleton {
-    background: linear-gradient(90deg, #f0f2f5 25%, #e8eaed 50%, #f0f2f5 75%);
+    background: linear-gradient(90deg, #f9fafb 25%, #f3f4f6 50%, #f9fafb 75%);
     background-size: 700px 100%;
     @apply animate-shimmer rounded-xl;
   }

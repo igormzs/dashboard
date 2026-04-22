@@ -8,7 +8,7 @@ export function EmptyState({ onAction }: { onAction: () => void }) {
       </div>
       <h3 className="text-lg font-bold text-gray-800 mb-2">Sem Dados Disponíveis</h3>
       <p className="text-gray-500 mb-6 text-center max-w-sm">Não existem registos de performance social para apresentar neste momento.</p>
-      <button onClick={onAction} className="px-6 py-2.5 bg-brand-blue hover:bg-brand-blue/90 text-white rounded-xl font-semibold shadow-sm transition-colors">
+      <button onClick={onAction} className="px-6 py-2.5 bg-brand-orange hover:bg-brand-orange/90 text-white rounded-xl font-semibold shadow-sm transition-colors">
         Inserir o Primeiro Registo
       </button>
     </div>

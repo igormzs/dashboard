@@ -32,13 +32,16 @@ export function Sidebar({ activeTab, onTabChange, user, onLogout }: SidebarProps
 
   return (
     <aside className="w-64 bg-white shadow-sidebar h-full flex flex-col z-20">
-      <div className="px-8 py-8 flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
-        <div className="w-8 h-8 rounded-lg bg-brand-blue flex items-center justify-center text-white font-bold">A</div>
-        <h2 className="text-xl font-bold tracking-tight text-brand-dark">Antigravity</h2>
+      <div className="px-8 py-8 flex flex-col gap-1 cursor-pointer" onClick={() => navigate('/')}>
+        <div className="flex items-center gap-3">
+          <img src="/logo.svg" alt="Stat-o Logo" className="w-8 h-8 drop-shadow-sm" />
+          <h2 className="text-xl font-bold tracking-tight text-brand-dark">Stat-o</h2>
+        </div>
+        <span className="text-[10px] font-semibold text-brand-orange tracking-widest uppercase">All your insights in one place.</span>
       </div>
       <nav className="flex-1 px-4 flex flex-col gap-2">
         {navItems.map((item) => (
-          <div key={item.id} className={`nav-item px-4 py-3 rounded-xl flex items-center gap-3 ${activeTab === item.id ? 'active bg-brand-lavender text-brand-blue font-semibold' : ''}`} onClick={() => handleTabClick(item.id)}>
+          <div key={item.id} className={`nav-item px-4 py-3 rounded-xl flex items-center gap-3 ${activeTab === item.id ? 'active bg-orange-50 text-brand-orange font-semibold' : ''}`} onClick={() => handleTabClick(item.id)}>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">{item.icon}</svg>
             {item.label}
           </div>

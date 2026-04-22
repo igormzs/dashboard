@@ -26,7 +26,7 @@ export function DataInputForm({ onSave }: { onSave: (record: KpiRecord) => Promi
   return (
     <div className="bg-white rounded-3xl p-8 max-w-3xl mx-auto border border-gray-100 shadow-card w-full">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Inserção de Dados de Performance</h2>
-      {status && (<div className={`mb-6 p-4 rounded-xl text-sm font-semibold block ${status.isError ? 'bg-brand-red/20 text-red-700' : 'bg-brand-mintdark/10 text-brand-mintdark'}`}>{status.msg}</div>)}
+      {status && (<div className={`mb-6 p-4 rounded-xl text-sm font-semibold block ${status.isError ? 'bg-brand-red/20 text-red-700' : 'bg-brand-orangedark/10 text-brand-orangedark'}`}>{status.msg}</div>)}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="flex flex-col gap-2"><label className="text-sm font-semibold text-gray-600">Rede Social</label><select value={network} onChange={(e) => setNetwork(e.target.value as NetworkName)} className="glass-input px-4 py-3 rounded-xl transition-all"><option value="Facebook">Facebook</option><option value="LinkedIn">LinkedIn</option><option value="Instagram">Instagram</option></select></div>
         <div className="flex flex-col gap-2"><label className="text-sm font-semibold text-gray-600">Mês/Ano</label><input type="month" value={month} onChange={(e) => setMonth(e.target.value)} className="glass-input px-4 py-3 rounded-xl transition-all" /></div>
@@ -36,7 +36,7 @@ export function DataInputForm({ onSave }: { onSave: (record: KpiRecord) => Promi
         <div className="flex flex-col gap-2"><label className="text-sm font-semibold text-gray-600">Engagement %</label><input type="number" value={engagement} onChange={(e) => setEngagement(e.target.value)} placeholder="0.0" min="0" step="0.1" className="glass-input px-4 py-3 rounded-xl transition-all" /></div>
       </div>
       <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
-        <button onClick={handleSave} className="bg-brand-blue hover:bg-brand-blue/90 text-white px-6 py-3 rounded-xl font-bold shadow-md shadow-brand-blue/20 transition-all">Guardar Registo</button>
+        <button onClick={handleSave} className="bg-brand-orange hover:bg-brand-orange/90 text-white px-6 py-3 rounded-xl font-bold shadow-md shadow-brand-orange/20 transition-all">Guardar Registo</button>
         <button onClick={handleClear} className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-bold transition-all">Limpar</button>
       </div>
     </div>

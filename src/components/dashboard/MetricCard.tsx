@@ -9,7 +9,7 @@ export function MetricCard({ data }: { data: MetricCardData }) {
   const bgClass = isDark ? 'bg-brand-charcoal text-white' : 'bg-white text-gray-800';
   const labelColor = isDark ? 'text-gray-300' : 'text-gray-500';
   const isNegative = data.delta?.includes('-');
-  const badgeColor = isDark ? 'bg-brand-mintdark/20 text-brand-mint' : isNegative ? 'bg-brand-red/10 text-red-600' : 'bg-brand-mintdark/10 text-brand-mintdark';
+  const badgeColor = isDark ? 'bg-brand-orangedark/20 text-brand-orangelight' : isNegative ? 'bg-brand-red/10 text-red-600' : 'bg-brand-orangedark/10 text-brand-orangedark';
 
   const chartData = {
     labels: data.trend.map((_, i) => i.toString()),

@@ -54,7 +54,7 @@ export function YoYComparison({ data }: { data: KpiRecord[] }) {
           <>
             <div className="mb-6 flex gap-2">
               <span className="px-3 py-1 bg-gray-100 rounded-lg text-sm font-semibold">Comparando</span>
-              <span className="px-3 py-1 bg-brand-blue/10 text-brand-blue rounded-lg text-sm font-bold flex items-center gap-2">
+              <span className="px-3 py-1 bg-brand-orange/10 text-brand-orange rounded-lg text-sm font-bold flex items-center gap-2">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" /></svg>
                 {formatMonth(m1)} <span className="text-gray-400 font-normal">vs</span> {formatMonth(m2)}
               </span>
@@ -70,7 +70,7 @@ export function YoYComparison({ data }: { data: KpiRecord[] }) {
                       const v1 = parseFloat(String(n.c1[metric.key] || 0));
                       const v2 = parseFloat(String(n.c2[metric.key] || 0));
                       const diff = v1 - v2; const pct = v2 !== 0 ? (diff / v2) * 100 : 0; const isPos = diff >= 0;
-                      const cColor = isPos ? 'text-brand-mintdark' : 'text-brand-red'; const cBg = isPos ? 'bg-brand-mintdark/10' : 'bg-brand-red/10';
+                      const cColor = isPos ? 'text-brand-orangedark' : 'text-brand-red'; const cBg = isPos ? 'bg-brand-orangedark/10' : 'bg-brand-red/10';
                       const isPctKey = metric.key.includes('%');
                       return (
                         <div key={metric.key} className="bg-gray-50/80 border border-gray-100 rounded-2xl p-4 flex flex-col justify-between">
